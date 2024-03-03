@@ -1,3 +1,3 @@
-RGGM
- { React Golang Gorm Mysql }
+RTGGM
+ { React Tailwind Golang Gorm Mysql }
 
