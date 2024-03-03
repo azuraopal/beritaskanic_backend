@@ -5,6 +5,7 @@ go 1.21.6
 require github.com/gofiber/fiber/v2 v2.52.2
 
 require (
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/gofiber/utils v0.0.10 // indirect
 	github.com/gorilla/schema v1.1.0 // indirect
 )
