@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/ValSpp/ber1taskanic/database"
+	"github.com/ValSpp/ber1taskanic/routes"
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
 )
@@ -18,6 +19,7 @@ func main() {
 
 	port := os.Getenv("PORT")
 	app := fiber.New()
+	routes.Setup(app)
 	app.Listen(":" + port)
 
 }
