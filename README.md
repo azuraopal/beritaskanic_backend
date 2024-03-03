@@ -1,3 +1,3 @@
 RTGGM
- { React Tailwind Golang Gorm Mysql }
+ { React (Tailwind) || Golang (Gorm, Jwt, Fiber) || Mysql }
 
