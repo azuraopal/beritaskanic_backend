@@ -11,6 +11,7 @@ import (
 	"github.com/ValSpp/ber1taskanic/database"
 	"github.com/ValSpp/ber1taskanic/models"
 	"github.com/ValSpp/ber1taskanic/util"
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -105,4 +106,8 @@ func Login(c *fiber.Ctx) error {
 		"user":    user,
 	})
 
+}
+
+type Claims struct {
+	jwt.StandardClaims
 }
