@@ -42,7 +42,7 @@ func AllPost(c *fiber.Ctx) error {
 		"meta": fiber.Map{
 			"total":     total,
 			"page":      page,
-			"last_page": math.Ceil(float64(int(total) / limit)),
+			"last_page": math.Ceil(float64(total) / float64(limit)),
 		},
 	})
 }
@@ -50,7 +50,7 @@ func AllPost(c *fiber.Ctx) error {
 func DetailPost(c *fiber.Ctx) error {
 	id, _ := strconv.Atoi(c.Params("id"))
 	var postberita models.Berita
-	database.DB.Where("id=?", id).Preload("User").First(&postberita)
+	database.DB.Where("id = ?", id).Preload("User").First(&postberita)
 	return c.JSON(fiber.Map{
 		"data": postberita,
 	})
@@ -58,13 +58,11 @@ func DetailPost(c *fiber.Ctx) error {
 
 func UpdatePost(c *fiber.Ctx) error {
 	id, _ := strconv.Atoi(c.Params("id"))
-	berita := models.Berita{
-		Id: uint(id),
+	var berita models.Berita
+	if err := c.BodyParser(&berita); err != nil {
+		fmt.Println("Unable to parse body")
 	}
-	// if err := c.BodyParser(&berita); err != nil {
-	// 	fmt.Println("Unable to parse body")
-	// }
-	database.DB.Where("id=?", id).Preload("User").First(&berita)
+	database.DB.Where("id = ?", id).Preload("User").First(&berita)
 	if berita.Id == 0 {
 		c.Status(400)
 		return c.JSON(fiber.Map{
@@ -81,7 +79,7 @@ func UniquePost(c *fiber.Ctx) error {
 	cookie := c.Cookies("jwt")
 	id, _ := util.Parsejwt(cookie)
 	var berita []models.Berita
-	database.DB.Model(&berita).Where("user_id=?", id).Preload("User").Find(&berita)
+	database.DB.Where("user_id = ?", id).Preload("User").Find(&berita)
 
 	return c.JSON(berita)
 }
@@ -93,7 +91,7 @@ func DeletePost(c *fiber.Ctx) error {
 	}
 
 	var postberita models.Berita
-	database.DB.Where("id=?", id).Preload("User").First(&postberita)
+	database.DB.Where("id = ?", id).Preload("User").First(&postberita)
 	if postberita.Id == 0 {
 		c.Status(400)
 		return c.JSON(fiber.Map{
@@ -113,5 +111,4 @@ func DeletePost(c *fiber.Ctx) error {
 	return c.JSON(fiber.Map{
 		"message": "Postingan berhasil dihapus!",
 	})
-
 }
