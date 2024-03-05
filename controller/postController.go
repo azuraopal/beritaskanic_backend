@@ -58,20 +58,15 @@ func DetailPost(c *fiber.Ctx) error {
 
 func UpdatePost(c *fiber.Ctx) error {
 	id, _ := strconv.Atoi(c.Params("id"))
-	var berita models.Berita
-	if err := c.BodyParser(&berita); err != nil {
-		fmt.Println("Unable to parse body")
+	berita := models.Berita{
+		Id: uint(id),
 	}
-	database.DB.Where("id = ?", id).Preload("User").First(&berita)
-	if berita.Id == 0 {
-		c.Status(400)
-		return c.JSON(fiber.Map{
-			"message": "Gagal Mengupdate, Silahkan coba lagi!",
-		})
+	if err := c.BodyParser(&berita); err != nil {
+		fmt.Println("Gagal Mengupdate Postingan, Silahkan coba lagi!")
 	}
 	database.DB.Model(&berita).Updates(berita)
 	return c.JSON(fiber.Map{
-		"message": "Postingan berhasil diperbarui",
+		"message":"Postingan Berhasil Di Update!",
 	})
 }
 
