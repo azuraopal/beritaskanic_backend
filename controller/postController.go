@@ -62,5 +62,7 @@ func UpdatePost(c *fiber.Ctx) error {
 		fmt.Println("Unable to parse body")
 	}
 	database.DB.Model(&berita).Updates(berita)
-	return c.JSON(berita)
+	return c.JSON(fiber.Map{
+		"message": "post updated successfully",
+	})
 }
