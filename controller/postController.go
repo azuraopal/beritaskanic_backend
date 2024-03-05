@@ -43,3 +43,12 @@ func AllPost(c *fiber.Ctx) error {
 		},
 	})
 }
+
+func DetailPost(c *fiber.Ctx) error {
+	id, _ := strconv.Atoi(c.Params("id"))
+	var postberita models.Berita
+	database.DB.Where("id=?", id).Preload("User").First(&postberita)
+	return c.JSON(fiber.Map{
+		"data": postberita,
+	})
+}
