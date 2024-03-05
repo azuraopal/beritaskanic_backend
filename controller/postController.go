@@ -71,7 +71,7 @@ func UpdatePost(c *fiber.Ctx) error {
 	}
 	database.DB.Model(&berita).Updates(berita)
 	return c.JSON(fiber.Map{
-		"message": "post updated successfully",
+		"message": "Postingan berhasil diperbarui",
 	})
 }
 
