@@ -52,3 +52,15 @@ func DetailPost(c *fiber.Ctx) error {
 		"data": postberita,
 	})
 }
+
+func UpdatePost(c *fiber.Ctx) error {
+	id, _ := strconv.Atoi(c.Params("id"))
+	berita := models.Berita{
+		Id: uint(id),
+	}
+	if err := c.BodyParser(&berita); err != nil {
+		fmt.Println("Unable to parse body")
+	}
+	database.DB.Model(&berita).Updates(berita)
+	return c.JSON(berita)
+}
