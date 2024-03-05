@@ -14,7 +14,7 @@ func main() {
 	database.Connect()
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading .env files")
+		log.Fatal("Error loading .env")
 	}
 
 	port := os.Getenv("PORT")
