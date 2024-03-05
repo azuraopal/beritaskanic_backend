@@ -7,6 +7,7 @@ import (
 
 	"github.com/ValSpp/ber1taskanic/database"
 	"github.com/ValSpp/ber1taskanic/models"
+	"github.com/ValSpp/ber1taskanic/util"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -65,4 +66,13 @@ func UpdatePost(c *fiber.Ctx) error {
 	return c.JSON(fiber.Map{
 		"message": "post updated successfully",
 	})
+}
+
+func UniquePost(c *fiber.Ctx) error {
+	cookie := c.Cookies("jwt")
+	id, _ := util.Parsejwt(cookie)
+	var berita []models.Berita
+	database.DB.Model(&berita).Where("user_id=?", id).Preload("User").Find(&berita)
+
+	return c.JSON(berita)
 }
