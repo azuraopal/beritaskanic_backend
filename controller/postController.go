@@ -21,7 +21,7 @@ func CreatePost(c *fiber.Ctx) error {
 	if err := database.DB.Create(&beritapost).Error; err != nil {
 		c.Status(400)
 		return c.JSON(fiber.Map{
-			"message": "muatan tidak valid",
+			"message": "Muatan tidak valid",
 		})
 	}
 	return c.JSON(fiber.Map{
@@ -62,7 +62,7 @@ func UpdatePost(c *fiber.Ctx) error {
 		Id: uint(id),
 	}
 	if err := c.BodyParser(&berita); err != nil {
-		fmt.Println("Gagal Mengupdate Postingan, Silahkan coba lagi!")
+		fmt.Println("Gagal Mengupdate Postingan, Silahkan Dicoba Lagi!")
 	}
 	database.DB.Model(&berita).Updates(berita)
 	return c.JSON(fiber.Map{
